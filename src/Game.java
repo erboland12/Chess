@@ -24,19 +24,21 @@ public class Game {
 		    	PName name = getPName(p1MoveCommands[0]);
 		    	
 		    	//Current coordinates of piece that is to be moved
-		    	int currX = letterToNum(p1MoveCommands[0].charAt(0));
-		    	int currY = Character.getNumericValue(p1MoveCommands[0].charAt(1)) - 1; 
+		    	int currY = letterToNum(p1MoveCommands[0].charAt(0));
+		    	int currX = swapInts(Character.getNumericValue(p1MoveCommands[0].charAt(1)));
+		    	System.out.println("(" + currX + ", " + currY + ")");
 		    	
 		    	//Updated coordinates of where piece is to be moved.
-		    	int newX = letterToNum(p1MoveCommands[1].charAt(0));
-		    	int newY = Character.getNumericValue(p1MoveCommands[1].charAt(1)) - 1; 
+		    	int newY = letterToNum(p1MoveCommands[1].charAt(0));
+		    	int newX = swapInts(Character.getNumericValue(p1MoveCommands[1].charAt(1))); 
+		    	System.out.println("(" + newX + ", " + newY + ")");
 		    	
 		    	//Determines if player is white or black
 		    	boolean player = objectiveMap[currX][currY].getPlayer();
 		    	
 		    	//Checks for valid pawn move for P1.
 		    	if(objectiveMap[currX][currY].getName() == PName.PAWN) {
-		    		if(validatePawnMove(name, player, newX - currX)) {
+		    		if(validatePawnMove(name, player, currX - newX)) {
 						objectiveMap = objectiveMap[currX][currY].move(objectiveMap, newX, newY, player);
 			    	}
 			    	else {
@@ -83,6 +85,35 @@ public class Game {
 		return -1;
 	}
 	
+	public static int swapInts(int n) {
+		if(n == 1) {
+			return 7;
+		}
+		else if(n == 2) {
+			return 6;
+		}
+		else if(n == 3) {
+			return 5;
+		}
+		else if(n == 4) {
+			return 4;
+		}
+		else if(n == 5) {
+			return 3;
+		}
+		else if(n == 6) {
+			return 2;
+		}
+		else if(n == 7) {
+			return 1;
+		}
+		else if(n == 8) {
+			return 0;
+		}
+		
+		return -1;
+	}
+	
 	public static PName getPName(String s) {
 		if(s.equals("p") || s.equals("P") || s.toLowerCase().equals("pawn")) {
 			return PName.PAWN;
@@ -92,7 +123,7 @@ public class Game {
 	}
 	
 	public static boolean validatePawnMove(PName name, boolean player, int sumOfX) {
-		if(sumOfX < 0) {
+		if(sumOfX >= 0) {
 			return true;			
 		}
 		
