@@ -11,7 +11,7 @@ public class Map {
 		Piece[][] map = new Piece[X][Y];
 		for(int i = 0; i < map.length; i++) {
 			for(int j = 0; j < map.length; j++) {
-				if(i == 6 || i == 1) {
+				if(i == 1) {
 					map[i][j] = new Pawn(PName.PAWN, i, j, false);
 				}
 				else if(i == 6) {
@@ -42,30 +42,54 @@ public class Map {
 		return map;
 	}
 	
-	public char[][] makeFreshMap() {
-		char[][] map = new char[X][Y];
+	public String[][] makeFreshMap(Piece[][] objMap) {
+		String[][] map = new String[X][Y];
 		for(int i = 0; i < map.length; i++) {
 			for(int j = 0; j < map.length; j++) {
-				if(i == 6|| i == 1) {
-					map[i][j] = 'P';
+				if(objMap[i][j].getName() == PName.PAWN) {
+					if(objMap[i][j].getPlayer()) {
+						map[i][j] = "wP";
+					}else {
+						map[i][j] = "bP";
+					}
 				}
-				else if(j == 0 && i == 0 || j == 7 && i == 7 || i == 0 && j == 7 || i == 7 && j == 0) {
-					map[i][j] = 'R';
+				else if(objMap[i][j].getName() == PName.ROOK) {
+					if(objMap[i][j].getPlayer()) {
+						map[i][j] = "wR";
+					}else {
+						map[i][j] = "bR";
+					}
 				}
-				else if(j == 1 && i == 0 || j == 6 && i == 7 || j == 6 && i == 0 || j == 1 && i == 7) {
-					map[i][j] = 'H';
+				else if(objMap[i][j].getName() == PName.KNIGHT) {
+					if(objMap[i][j].getPlayer()) {
+						map[i][j] = "wH";
+					}else {
+						map[i][j] = "bH";
+					}
 				}
-				else if(j == 2 && i == 0 || j == 5 && i == 7 || j == 5 && i == 0 || j == 2 && i == 7) {
-					map[i][j] = 'B';
+				else if(objMap[i][j].getName() == PName.BISHOP) {
+					if(objMap[i][j].getPlayer()) {
+						map[i][j] = "wB";
+					}else {
+						map[i][j] = "bB";
+					}
 				}
-				else if(j == 3 && i == 0 || j == 3 && i == 7 || j == 3 && i == 0 || j == 3 && i == 7) {
-					map[i][j] = 'Q';
+				else if(objMap[i][j].getName() == PName.QUEEN) {
+					if(objMap[i][j].getPlayer()) {
+						map[i][j] = "wQ";
+					}else {
+						map[i][j] = "bQ";
+					}
 				}
-				else if(j == 4 && i == 0 || j == 4 && i == 7 || j == 4 && i == 0 || j == 4 && i == 7) {
-					map[i][j] = 'K';
+				else if(objMap[i][j].getName() == PName.KING) {
+					if(objMap[i][j].getPlayer()) {
+						map[i][j] = "wK";
+					}else {
+						map[i][j] = "bK";
+					}
 				}
 				else {
-					map[i][j] = '-';
+					map[i][j] = "--";
 
 				}
 			}
@@ -74,13 +98,18 @@ public class Map {
 		return map;
 	}
 	
-	public void printMap(char[][] map) {
+	public void printMap(String[][] map) {
+    	System.out.println("    A   B   C   D   E   F   G   H");
+    	System.out.println("   --------------------------------");
 		for(int i = 0; i < map.length; i++) {
+			System.out.print(map.length - i + " |");
 			for(int j = 0; j < map.length; j++) {
 				System.out.print(" " + map[i][j] + " ");
 			}
+			System.out.print("|");
 			System.out.println("");
 		}
+    	System.out.println("   --------------------------------");
 	}
 	
 	public void printObjectiveMap(Piece[][] map) {

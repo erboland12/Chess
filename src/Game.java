@@ -6,7 +6,8 @@ public class Game {
 		boolean gameOver = false;
 		
 		Piece[][] objectiveMap = m.makeObjectiveMap(); 
-		m.printObjectiveMap(objectiveMap);
+		String[][] visualMap = m.makeFreshMap(objectiveMap);
+		m.printMap(visualMap);
 
 		while(!gameOver) {
 			//Scanner call to receive P1 command
@@ -51,7 +52,9 @@ public class Game {
 		    		
 		    	}
 		    	System.out.println(" ");
-				m.printObjectiveMap(objectiveMap);
+		    	visualMap = m.makeFreshMap(objectiveMap);
+				m.printMap(visualMap);
+//				m.printObjectiveMap(objectiveMap);
 		    }
 
 		}
