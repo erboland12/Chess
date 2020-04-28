@@ -40,11 +40,6 @@ public class King extends Piece {
 		return map;
 	}
 
-	@Override
-	public Piece[][] moveBlack(Piece[][] map, int newX, int newY) {
-		
-		return null;
-	}
 
 	@Override
 	public boolean getPlayer() {

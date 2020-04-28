@@ -49,7 +49,6 @@ public class Map {
 				}
 				else {
 					map[i][j] = new Empty(PName.EMPTY);
-
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-
+import java.math.*;
 public class Pawn extends Piece {
 	int mMoveCount;
 	int mX;
@@ -60,6 +60,27 @@ public class Pawn extends Piece {
 			}
 		}
 		
+		//Validation for pawn moves; return map if 
+		if(checkForCollision(mX, mY, newX, newY, map) || checkForInvalidMoves(mX, mY, newX, newY, map)) {
+			return map;
+		}
+		
+		boolean validAttack = checkForValidAttack(mX, mY, newX, newY, map);
+		if(validAttack) {
+			//Switches the places of the empty piece and where the piece is moving to
+			System.out.println("Pawn has attacked");
+			Piece temp = new Empty(PName.EMPTY);
+			map[newX][newY] = map[mX][mY];
+			map[mX][mY] = temp;	
+			
+			//Updates the piece's x and y coordinates
+			mX = newX;
+			mY = newY;
+			
+			map[mX][mY].setMoveCount(map[mX][mY].getMoveCount() + 1);
+			return map;
+		}
+		
 		//Switches the places of the empty piece and where the piece is moving to.s
 		Piece temp = map[newX][newY];
 		map[newX][newY] = map[mX][mY];
@@ -75,10 +96,47 @@ public class Pawn extends Piece {
 		return map;
 	}
 	
-	//Move function for P2 (Should only be necessary for Pawn)
-	@Override
-	public Piece[][] moveBlack(Piece[][] map, int newX, int newY) {
-		return null;
+	
+	private boolean checkForCollision(int currX, int currY, int newX, int newY, Piece[][] map) {
+		PName name = map[newX][newY].getName();
+		if(name == PName.EMPTY) {
+			return false;
+		}
+		else {
+			if(map[currX][currY].getPlayer() == map[newX][newY].getPlayer() ||
+				map[currX][currY].getPlayer() != map[newX][newY].getPlayer() && newY - currY == 0) {
+				System.out.println("Invalid Move:  You cannot move to your a spot occupied by one of your pieces");
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	private boolean checkForInvalidMoves(int currX, int currY, int newX, int newY, Piece[][] map) {
+//		if(newY - currY != 0 && (map[newX][newY].getName() == PName.EMPTY || map[newX][newY].getPlayer() != map[currX][currY].getPlayer())) {
+//			System.out.println("Invalid Move:  You can only move pawn forward and attack diagonally");
+//			return true;
+//		}
+		if(Math.abs(newY - currY) >= 1 && newX - currX == 0 || map[newX][newY].getName() == PName.EMPTY && currY != newY) {
+			System.out.println("Invalid Move:  You can only move pawn forward and attack diagonally");
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean checkForValidAttack(int currX, int currY, int newX, int newY, Piece[][] map) {
+		PName name = map[newX][newY].getName();
+		if(name == PName.EMPTY && Math.abs(newY - currY) != 0) {
+			System.out.println("Invalid Move:  You cannot move this pawn diagonally unless there is an enemy piece there");
+			return false;
+		}
+		else {
+			if(Math.abs(newX - currX) == 1 && Math.abs(newY - currY) == 1) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	//Helper function to determine if a pawn can move up two spaces or not

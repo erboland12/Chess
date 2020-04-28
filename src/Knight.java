@@ -42,10 +42,6 @@ public class Knight extends Piece {
 		
 	}
 
-	@Override
-	public Piece[][] moveBlack(Piece[][] map, int newX, int newY) {
-		return null;
-	}
 
 	@Override
 	public boolean getPlayer() {

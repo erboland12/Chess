@@ -22,6 +22,7 @@ public class Game {
 		    }
 		    else {
 		    	//Type of piece from command
+		    	Piece[][] tempMap = objectiveMap;
 		    	PName name = getPName(p1MoveCommands[0]);
 		    	
 		    	//Current coordinates of piece that is to be moved
@@ -48,13 +49,12 @@ public class Game {
 		    	}
 		    	
 		    	
-		    	if(name != PName.PAWN && name != PName.EMPTY) {
-		    		
-		    	}
+//		    	if(name != PName.PAWN && name != PName.EMPTY) {
+//		    		
+//		    	}
 		    	System.out.println(" ");
 		    	visualMap = m.makeFreshMap(objectiveMap);
 				m.printMap(visualMap);
-//				m.printObjectiveMap(objectiveMap);
 		    }
 
 		}

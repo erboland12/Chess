@@ -40,12 +40,6 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public Piece[][] moveBlack(Piece[][] map, int newX, int newY) {
-		
-		return null;
-	}
-
-	@Override
 	public boolean getPlayer() {
 		return mPlayer;
 	}

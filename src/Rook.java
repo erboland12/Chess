@@ -46,11 +46,6 @@ public class Rook extends Piece {
 		
 	}
 
-	@Override
-	public Piece[][] moveBlack(Piece[][] map, int newX, int newY) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean getPlayer() {

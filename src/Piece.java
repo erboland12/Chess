@@ -14,6 +14,4 @@ abstract class Piece {
 	public abstract void setPlayer(boolean player);
 	
 	public abstract Piece[][] move(Piece[][] map, int newX, int newY, boolean player);
-	
-	public abstract Piece[][] moveBlack(Piece[][] map, int newX, int newY);
 }
