@@ -2,10 +2,16 @@
 public class Rook extends Piece {
 	int mMoveCount;
 	PName mName;
+	int mX;
+	int mY;
+	boolean mPlayer;
 	
-	public Rook(PName name) {
+	public Rook(PName name, int x, int y, boolean player) {
 		mMoveCount = 0;
 		mName = name;
+		mX = x;
+		mY = y;
+		mPlayer = player;
 	}
 
 	@Override
@@ -49,7 +55,7 @@ public class Rook extends Piece {
 	@Override
 	public boolean getPlayer() {
 		// TODO Auto-generated method stub
-		return false;
+		return mPlayer;
 	}
 
 	@Override

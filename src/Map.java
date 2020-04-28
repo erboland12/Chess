@@ -17,20 +17,35 @@ public class Map {
 				else if(i == 6) {
 					map[i][j] = new Pawn(PName.PAWN, i, j, true);
 				}
-				else if(j == 0 && i == 0 || j == 7 && i == 7 || i == 0 && j == 7 || i == 7 && j == 0) {
-					map[i][j] = new Rook(PName.ROOK);
+				else if(j == 0 && i == 0  || i == 0 && j == 7) {
+					map[i][j] = new Rook(PName.ROOK, i, j, false);
 				}
-				else if(j == 1 && i == 0 || j == 6 && i == 7 || j == 6 && i == 0 || j == 1 && i == 7) {
-					map[i][j] = new Knight(PName.KNIGHT);
+				else if(j == 7 && i == 7 || i == 7 && j == 0) {
+					map[i][j] = new Rook(PName.ROOK, i, j, true);
 				}
-				else if(j == 2 && i == 0 || j == 5 && i == 7 || j == 5 && i == 0 || j == 2 && i == 7) {
-					map[i][j] = new Bishop(PName.BISHOP);
+				else if(j == 1 && i == 0 || j == 6 && i == 0) {
+					map[i][j] = new Knight(PName.KNIGHT, i, j, false);
 				}
-				else if(j == 3 && i == 0 || j == 3 && i == 7 || j == 3 && i == 0 || j == 3 && i == 7) {
-					map[i][j] = new Queen(PName.QUEEN);
+				else if(j == 6 && i == 7  || j == 1 && i == 7) {
+					map[i][j] = new Knight(PName.KNIGHT, i, j, true);
 				}
-				else if(j == 4 && i == 0 || j == 4 && i == 7 || j == 4 && i == 0 || j == 4 && i == 7) {
-					map[i][j] = new King(PName.KING);
+				else if(j == 2 && i == 0 || j == 5 && i == 0) {
+					map[i][j] = new Bishop(PName.BISHOP, i, j , false);
+				}
+				else if(j == 5 && i == 7 || j == 2 && i == 7) {
+					map[i][j] = new Bishop(PName.BISHOP, i, j, true);
+				}
+				else if(j == 3 && i == 0) {
+					map[i][j] = new Queen(PName.QUEEN, i, j, false);
+				}
+				else if(j == 3 && i == 7) {
+					map[i][j] = new Queen(PName.QUEEN, i, j, true);
+				}
+				else if(j == 4 && i == 0) {
+					map[i][j] = new King(PName.KING, i, j, false);
+				}
+				else if(j == 4 && i == 7) {
+					map[i][j] = new King(PName.KING, i, j, true);
 				}
 				else {
 					map[i][j] = new Empty(PName.EMPTY);
