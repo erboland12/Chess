@@ -1,63 +1,143 @@
 import java.util.Scanner;
 
 public class Game {
+	public static boolean player1Turn = true;
+	public static boolean player2Turn = false;
 	public static void main(String[] args) {
 		Map m = new Map();
 		boolean gameOver = false;
 		
 		Piece[][] objectiveMap = m.makeObjectiveMap(); 
+    	Piece[][] tempMap = new Piece[8][8];
 		String[][] visualMap = m.makeFreshMap(objectiveMap);
 		m.printMap(visualMap);
 
 		while(!gameOver) {
-			//Scanner call to receive P1 command
-			Scanner s = new Scanner(System.in);
-		    System.out.println("P1 Move: ");
-		    String p1Move = s.nextLine();
-		    String[] p1MoveCommands = p1Move.split("\\s+");
+			while(Game.player1Turn) {
+				//Scanner call to receive P1 command
+				Scanner s = new Scanner(System.in);
+			    System.out.println("P1 Move: ");
+			    String p1Move = s.nextLine();
+			    String[] p1MoveCommands = p1Move.split("\\s+");
 
-		    
-		    if(p1MoveCommands.length > 2 || (p1MoveCommands[0].length() != 2 || p1MoveCommands[1].length() != 2)) {
-		    	System.out.println("Invalid Move.  Try Again.");
-		    }
-		    else {
-		    	//Type of piece from command
-		    	Piece[][] tempMap = objectiveMap;
-		    	PName name = getPName(p1MoveCommands[0]);
-		    	
-		    	//Current coordinates of piece that is to be moved
-		    	int currY = letterToNum(p1MoveCommands[0].charAt(0));
-		    	int currX = swapInts(Character.getNumericValue(p1MoveCommands[0].charAt(1)));
-		    	System.out.println("(" + currX + ", " + currY + ")");
-		    	
-		    	//Updated coordinates of where piece is to be moved.
-		    	int newY = letterToNum(p1MoveCommands[1].charAt(0));
-		    	int newX = swapInts(Character.getNumericValue(p1MoveCommands[1].charAt(1))); 
-		    	System.out.println("(" + newX + ", " + newY + ")");
-		    	
-		    	//Determines if player is white or black
-		    	boolean player = objectiveMap[currX][currY].getPlayer();
-		    	
-		    	//Checks for valid pawn move for P1.
-		    	if(objectiveMap[currX][currY].getName() == PName.PAWN) {
-		    		if(validatePawnMove(name, player, currX - newX)) {
-						objectiveMap = objectiveMap[currX][currY].move(objectiveMap, newX, newY, player);
-			    	}
-			    	else {
-			    		System.out.println("Invalid Pawn Move For Player 1: Your Pawn Cannot Move Backwards.");
-			    	}
-		    	}
-		    	
-		    	
-//		    	if(name != PName.PAWN && name != PName.EMPTY) {
-//		    		
-//		    	}
-		    	System.out.println(" ");
-		    	visualMap = m.makeFreshMap(objectiveMap);
-				m.printMap(visualMap);
-		    }
-
+			    
+			    if(p1MoveCommands.length > 2 || (p1MoveCommands[0].length() != 2 || p1MoveCommands[1].length() != 2)) {
+			    	System.out.println("Invalid Move.  Try Again.");
+			    }
+			    else {
+			    	//Type of piece from command
+			    	PName name = getPName(p1MoveCommands[0]);
+			    	
+			    	//Current coordinates of piece that is to be moved
+			    	int currY = letterToNum(p1MoveCommands[0].charAt(0));
+			    	int currX = swapInts(Character.getNumericValue(p1MoveCommands[0].charAt(1)));
+			    	System.out.println("(" + currX + ", " + currY + ")");
+			    	
+			    	//Updated coordinates of where piece is to be moved.
+			    	int newY = letterToNum(p1MoveCommands[1].charAt(0));
+			    	int newX = swapInts(Character.getNumericValue(p1MoveCommands[1].charAt(1))); 
+			    	System.out.println("(" + newX + ", " + newY + ")");
+			    	
+			    	//Determines if player is white or black
+			    	boolean player = objectiveMap[currX][currY].getPlayer();
+			    				    	
+			    	//Checks for valid pawn move for P1.
+			    	objectiveMap = checkMoves(objectiveMap, name, currX, currY, newX, newY, player);
+			    	showMap(visualMap, m, objectiveMap, s);
+//			    	if(objectiveMap[currX][currY].getName() == PName.PAWN) {
+//			    		if(validatePawnMove(name, player, currX - newX)) {
+//							objectiveMap = objectiveMap[currX][currY].move(objectiveMap, newX, newY, player);
+//				    	}
+//				    	else {
+//				    		System.out.println("Invalid Pawn Move For Player 1: Your Pawn Cannot Move Backwards.");
+//				    	}
+//			    	}
+//
+//			    	//Prints map regardless of turn switch
+//			    	System.out.println(" ");
+//			    	visualMap = m.makeFreshMap(objectiveMap);
+//					m.printMap(visualMap);
+//					s.close();
+			    }	
+			}
+			while(Game.player2Turn) {
+				//Scanner call to receive P2 command.
+				Scanner s = new Scanner(System.in);
+			    System.out.println("P2 Move: ");
+			    String p2Move = s.nextLine();
+			    String[] p2MoveCommands = p2Move.split("\\s+");
+			    
+				if(p2MoveCommands.length > 2 || (p2MoveCommands[0].length() != 2 || p2MoveCommands[1].length() != 2)) {
+			    	System.out.println("Invalid Move.  Try Again.");
+			    }
+				else {
+			    	//Type of piece from command
+			    	PName name = getPName(p2MoveCommands[0]);
+			    	
+			    	//Current coordinates of piece that is to be moved
+			    	int currY = letterToNum(p2MoveCommands[0].charAt(0));
+			    	int currX = swapInts(Character.getNumericValue(p2MoveCommands[0].charAt(1)));
+			    	System.out.println("(" + currX + ", " + currY + ")");
+			    	
+			    	//Updated coordinates of where piece is to be moved.
+			    	int newY = letterToNum(p2MoveCommands[1].charAt(0));
+			    	int newX = swapInts(Character.getNumericValue(p2MoveCommands[1].charAt(1))); 
+			    	System.out.println("(" + newX + ", " + newY + ")");
+			    	
+			    	//Determines if player is white or black
+			    	boolean player = objectiveMap[currX][currY].getPlayer();
+			    	
+			    	//Checks for valid pawn move for P2.
+			    	objectiveMap = checkMoves(objectiveMap, name, currX, currY, newX, newY, player);
+			    	showMap(visualMap, m, objectiveMap, s);
+//			    	if(objectiveMap[currX][currY].getName() == PName.PAWN) {
+//			    		if(validatePawnMove(name, player, currX - newX)) {
+//							objectiveMap = objectiveMap[currX][currY].move(objectiveMap, newX, newY, player);
+//				    	}
+//				    	else {
+//				    		System.out.println("Invalid Pawn Move For Player 1: Your Pawn Cannot Move Backwards.");
+//				    	}
+//			    	}
+//
+//			    	//Prints map regardless of turn switch
+//			    	System.out.println(" ");
+//			    	visualMap = m.makeFreshMap(objectiveMap);
+//					m.printMap(visualMap);
+//					s.close();
+			    }
+			}
+			
 		}
+	}
+	
+	//Determines movement based on type of piece and player
+	public static Piece[][] checkMoves(Piece[][] map, PName name, int currX, int currY, int newX, int newY, boolean player) {
+		//Checks for valid pawn move for P1.
+    	if(map[currX][currY].getName() == PName.PAWN && player == true) {
+    		if(validatePawnMove(name, player, currX - newX)) {
+				map = map[currX][currY].move(map, newX, newY, player);
+	    	}
+	    	else {
+	    		System.out.println("Invalid Pawn Move For Player 1: Your Pawn Cannot Move Backwards.");
+	    	}
+    	}
+		//Checks for valid pawn move for P1.
+    	if(map[currX][currY].getName() == PName.PAWN && player == false) {
+    		if(!validatePawnMove(name, player, currX - newX)) {
+				map = map[currX][currY].move(map, newX, newY, player);
+	    	}
+	    	else {
+	    		System.out.println("Invalid Pawn Move For Player 2: Your Pawn Cannot Move Backwards.");
+	    	}
+    	}
+    	return map;
+	}
+	
+	public static void showMap(String[][] visualMap, Map m, Piece[][] map, Scanner s) {
+    	//Prints map regardless of turn switch
+    	System.out.println(" ");
+    	visualMap = m.makeFreshMap(map);
+		m.printMap(visualMap);
 	}
 	
 	public static int letterToNum(char c) {

@@ -65,6 +65,21 @@ public class Pawn extends Piece {
 			return map;
 		}
 		
+		//The move is valid, so switch turns for players
+		if(Game.player1Turn == true) {
+			Game.player1Turn = false;
+		}
+		else {
+			Game.player1Turn = true;
+		}
+		if(Game.player2Turn == true) {
+			Game.player2Turn = false;
+		}
+		else {
+			Game.player2Turn = true;
+		}
+		
+		//If command is to attack, make sure enemy piece is diagonal to current pawn
 		boolean validAttack = checkForValidAttack(mX, mY, newX, newY, map);
 		if(validAttack) {
 			//Switches the places of the empty piece and where the piece is moving to
