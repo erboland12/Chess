@@ -82,7 +82,6 @@ public class Pawn extends Piece {
 		boolean validAttack = checkForValidAttack(mX, mY, newX, newY, map);
 		if(validAttack) {
 			//Switches the places of the empty piece and where the piece is moving to
-			System.out.println("Pawn has attacked");
 			Piece temp = new Empty(PName.EMPTY);
 			map[newX][newY] = map[mX][mY];
 			map[mX][mY] = temp;	
