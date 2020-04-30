@@ -131,11 +131,11 @@ public class Rook extends Piece {
 			}
 		}
 		else if(currX == newX && currY != newY) {
-			int tempCurr = currY + 1;
+			int tempCurr = currY - 1;
 			int tempNew = newY;
 			boolean invalid = false;
 			if(map[currX][currY].getPlayer()) {
-				return validMovementHoriz(tempNew, tempCurr, currX, invalid, map);
+				return validMovementHoriz(tempCurr, tempNew, currX, invalid, map);
 			}
 			else {
 				return validMovementHoriz(tempCurr, tempNew, currX, invalid, map);
