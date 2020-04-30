@@ -54,4 +54,22 @@ public class Empty extends Piece {
 		
 	}
 
+	@Override
+	public boolean checkForCollision(int currX, int currY, int newX, int newY, Piece[][] map) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean checkForInvalidMoves(int currX, int currY, int newX, int newY, Piece[][] map) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean checkForValidAttack(int currX, int currY, int newX, int newY, Piece[][] map) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

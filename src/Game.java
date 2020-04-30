@@ -8,7 +8,6 @@ public class Game {
 		boolean gameOver = false;
 		
 		Piece[][] objectiveMap = m.makeObjectiveMap(); 
-    	Piece[][] tempMap = new Piece[8][8];
 		String[][] visualMap = m.makeFreshMap(objectiveMap);
 		m.printMap(visualMap);
 
@@ -31,33 +30,22 @@ public class Game {
 			    	//Current coordinates of piece that is to be moved
 			    	int currY = letterToNum(p1MoveCommands[0].charAt(0));
 			    	int currX = swapInts(Character.getNumericValue(p1MoveCommands[0].charAt(1)));
-			    	System.out.println("(" + currX + ", " + currY + ")");
 			    	
 			    	//Updated coordinates of where piece is to be moved.
 			    	int newY = letterToNum(p1MoveCommands[1].charAt(0));
 			    	int newX = swapInts(Character.getNumericValue(p1MoveCommands[1].charAt(1))); 
-			    	System.out.println("(" + newX + ", " + newY + ")");
 			    	
 			    	//Determines if player is white or black
 			    	boolean player = objectiveMap[currX][currY].getPlayer();
 			    				    	
 			    	//Checks for valid pawn move for P1.
-			    	objectiveMap = checkMoves(objectiveMap, name, currX, currY, newX, newY, player);
+			    	if(objectiveMap[currX][currY].getPlayer() == false) {
+			    		System.out.println("Invalid Move: You cannot move a black piece");
+			    	}
+			    	else {
+				    	objectiveMap = checkMoves(objectiveMap, name, currX, currY, newX, newY, player);			    		
+			    	}
 			    	showMap(visualMap, m, objectiveMap, s);
-//			    	if(objectiveMap[currX][currY].getName() == PName.PAWN) {
-//			    		if(validatePawnMove(name, player, currX - newX)) {
-//							objectiveMap = objectiveMap[currX][currY].move(objectiveMap, newX, newY, player);
-//				    	}
-//				    	else {
-//				    		System.out.println("Invalid Pawn Move For Player 1: Your Pawn Cannot Move Backwards.");
-//				    	}
-//			    	}
-//
-//			    	//Prints map regardless of turn switch
-//			    	System.out.println(" ");
-//			    	visualMap = m.makeFreshMap(objectiveMap);
-//					m.printMap(visualMap);
-//					s.close();
 			    }	
 			}
 			while(Game.player2Turn) {
@@ -88,22 +76,13 @@ public class Game {
 			    	boolean player = objectiveMap[currX][currY].getPlayer();
 			    	
 			    	//Checks for valid pawn move for P2.
-			    	objectiveMap = checkMoves(objectiveMap, name, currX, currY, newX, newY, player);
+			    	if(objectiveMap[currX][currY].getPlayer() == true) {
+			    		System.out.println("Invalid Move: You cannot move a white piece");
+			    	}
+			    	else {
+				    	objectiveMap = checkMoves(objectiveMap, name, currX, currY, newX, newY, player);
+			    	}
 			    	showMap(visualMap, m, objectiveMap, s);
-//			    	if(objectiveMap[currX][currY].getName() == PName.PAWN) {
-//			    		if(validatePawnMove(name, player, currX - newX)) {
-//							objectiveMap = objectiveMap[currX][currY].move(objectiveMap, newX, newY, player);
-//				    	}
-//				    	else {
-//				    		System.out.println("Invalid Pawn Move For Player 1: Your Pawn Cannot Move Backwards.");
-//				    	}
-//			    	}
-//
-//			    	//Prints map regardless of turn switch
-//			    	System.out.println(" ");
-//			    	visualMap = m.makeFreshMap(objectiveMap);
-//					m.printMap(visualMap);
-//					s.close();
 			    }
 			}
 			
@@ -129,6 +108,9 @@ public class Game {
 	    	else {
 	    		System.out.println("Invalid Pawn Move For Player 2: Your Pawn Cannot Move Backwards.");
 	    	}
+    	}
+    	else {
+			map = map[currX][currY].move(map, newX, newY, player);
     	}
     	return map;
 	}

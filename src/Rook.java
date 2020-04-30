@@ -1,4 +1,3 @@
-
 public class Rook extends Piece {
 	int mMoveCount;
 	PName mName;
@@ -57,6 +56,24 @@ public class Rook extends Piece {
 	public void setPlayer(boolean player) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean checkForCollision(int currX, int currY, int newX, int newY, Piece[][] map) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean checkForInvalidMoves(int currX, int currY, int newX, int newY, Piece[][] map) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean checkForValidAttack(int currX, int currY, int newX, int newY, Piece[][] map) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

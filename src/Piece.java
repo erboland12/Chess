@@ -14,4 +14,11 @@ abstract class Piece {
 	public abstract void setPlayer(boolean player);
 	
 	public abstract Piece[][] move(Piece[][] map, int newX, int newY, boolean player);
+	
+	public abstract boolean checkForCollision(int currX, int currY, int newX, int newY, Piece[][] map);
+	
+	public abstract boolean checkForInvalidMoves(int currX, int currY, int newX, int newY, Piece[][] map);
+	
+	public abstract boolean checkForValidAttack(int currX, int currY, int newX, int newY, Piece[][] map);
+
 }

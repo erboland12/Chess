@@ -1,4 +1,3 @@
-import java.math.*;
 public class Pawn extends Piece {
 	int mMoveCount;
 	int mX;
@@ -60,7 +59,7 @@ public class Pawn extends Piece {
 			}
 		}
 		
-		//Validation for pawn moves; return map if 
+		//Validation for pawn moves; return map if either validation method return true
 		if(checkForCollision(mX, mY, newX, newY, map) || checkForInvalidMoves(mX, mY, newX, newY, map)) {
 			return map;
 		}
@@ -111,8 +110,8 @@ public class Pawn extends Piece {
 		return map;
 	}
 	
-	
-	private boolean checkForCollision(int currX, int currY, int newX, int newY, Piece[][] map) {
+	@Override
+	public boolean checkForCollision(int currX, int currY, int newX, int newY, Piece[][] map) {
 		PName name = map[newX][newY].getName();
 		if(name == PName.EMPTY) {
 			return false;
@@ -127,12 +126,8 @@ public class Pawn extends Piece {
 		return false;
 	}
 	
-	
-	private boolean checkForInvalidMoves(int currX, int currY, int newX, int newY, Piece[][] map) {
-//		if(newY - currY != 0 && (map[newX][newY].getName() == PName.EMPTY || map[newX][newY].getPlayer() != map[currX][currY].getPlayer())) {
-//			System.out.println("Invalid Move:  You can only move pawn forward and attack diagonally");
-//			return true;
-//		}
+	@Override
+	public boolean checkForInvalidMoves(int currX, int currY, int newX, int newY, Piece[][] map) {
 		if(Math.abs(newY - currY) >= 1 && newX - currX == 0 || map[newX][newY].getName() == PName.EMPTY && currY != newY) {
 			System.out.println("Invalid Move:  You can only move pawn forward and attack diagonally");
 			return true;
@@ -140,7 +135,8 @@ public class Pawn extends Piece {
 		return false;
 	}
 	
-	private boolean checkForValidAttack(int currX, int currY, int newX, int newY, Piece[][] map) {
+	@Override
+	public boolean checkForValidAttack(int currX, int currY, int newX, int newY, Piece[][] map) {
 		PName name = map[newX][newY].getName();
 		if(name == PName.EMPTY && Math.abs(newY - currY) != 0) {
 			System.out.println("Invalid Move:  You cannot move this pawn diagonally unless there is an enemy piece there");
@@ -148,6 +144,17 @@ public class Pawn extends Piece {
 		}
 		else {
 			if(Math.abs(newX - currX) == 1 && Math.abs(newY - currY) == 1) {
+				String attacker = "";
+				String victim = "";
+				if(map[currX][currY].getPlayer()) {
+					attacker = "White's ";
+					victim = "Black's ";
+				}
+				else {
+					attacker = "Black's ";
+					victim = "White's ";
+				}
+				System.out.println(attacker + "pawn has taken " + victim + map[newX][newY].getName().toString().toLowerCase());
 				return true;
 			}
 		}
